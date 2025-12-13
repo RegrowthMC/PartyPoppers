@@ -17,11 +17,11 @@ public final class PartyPoppers extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         this.customItemRegistry = new CustomItemRegistry();
-        customItemRegistry.register(new ItemKey(Material.PAPER, 1000), new PartyPopper());
-        customItemRegistry.register(new ItemKey(Material.PAPER, 1001), new LesbianPartyPopper());
-        customItemRegistry.register(new ItemKey(Material.PAPER, 1002), new GayPartyPopper());
-        customItemRegistry.register(new ItemKey(Material.PAPER, 1003), new BisexualPartyPopper());
-        customItemRegistry.register(new ItemKey(Material.PAPER, 1004), new TransPartyPopper());
+        customItemRegistry.register(new ItemKey(Material.PAPER, 100), new PartyPopper());
+        customItemRegistry.register(new ItemKey(Material.PAPER, 101), new LesbianPartyPopper());
+        customItemRegistry.register(new ItemKey(Material.PAPER, 102), new GayPartyPopper());
+        customItemRegistry.register(new ItemKey(Material.PAPER, 103), new BisexualPartyPopper());
+        customItemRegistry.register(new ItemKey(Material.PAPER, 104), new TransPartyPopper());
 
         getServer().getPluginManager().registerEvents(this, this);
     }

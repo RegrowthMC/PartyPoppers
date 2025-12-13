@@ -1,4 +1,4 @@
-name: ProjectName
+name: PartyPoppers
 version: ${project.version}
-main: org.lushplugins.projectname.ProjectName
+main: org.lushplugins.partypoppers.PartyPoppers
 api-version: '1.17'

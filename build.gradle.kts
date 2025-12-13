@@ -18,10 +18,6 @@ repositories {
 dependencies {
     // Dependencies
     compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
-
-    // Soft Dependencies
-
-    // Libraries
 }
 
 java {
@@ -55,6 +51,10 @@ tasks {
         filesMatching("plugin.yml") {
             expand("version" to rootProject.version)
         }
+    }
+
+    runServer {
+        minecraftVersion("1.21.8")
     }
 }
 

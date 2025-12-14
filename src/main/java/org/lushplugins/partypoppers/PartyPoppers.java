@@ -3,6 +3,7 @@ package org.lushplugins.partypoppers;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +13,14 @@ import org.lushplugins.partypoppers.item.ItemKey;
 import org.lushplugins.partypoppers.item.partypopper.*;
 
 public final class PartyPoppers extends JavaPlugin implements Listener {
+    private static PartyPoppers plugin;
+
     private CustomItemRegistry customItemRegistry;
+
+    @Override
+    public void onLoad() {
+        plugin = this;
+    }
 
     @Override
     public void onEnable() {
@@ -38,5 +46,16 @@ public final class PartyPoppers extends JavaPlugin implements Listener {
         if (interactable != null) {
             interactable.onInteract(event);
         }
+    }
+
+    @EventHandler
+    public void onEntityDamageEntity(EntityDamageByEntityEvent event) {
+        if (event.getDamager().hasMetadata("partypoppers:no_damage")) {
+            event.setCancelled(true);
+        }
+    }
+
+    public static PartyPoppers getInstance() {
+        return plugin;
     }
 }

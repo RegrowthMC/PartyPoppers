@@ -1,12 +1,15 @@
 package org.lushplugins.partypoppers.item.partypopper;
 
+import net.kyori.adventure.key.Key;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
-import org.bukkit.World;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.lushplugins.partypoppers.PartyPoppers;
 import org.lushplugins.partypoppers.item.Interactable;
 
 public class PartyPopper implements Interactable {
@@ -24,9 +27,12 @@ public class PartyPopper implements Interactable {
     @Override
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        World world = player.getWorld();
+        ItemStack item = event.getItem();
+        if (player.hasCooldown(item)) {
+            return;
+        }
 
-        world.spawn(player.getLocation(), Firework.class, (firework) -> {
+        player.getWorld().spawn(player.getLocation().clone().add(0, 1, 0), Firework.class, (firework) -> {
             firework.setSilent(true);
             firework.setVelocity(player.getLocation().getDirection().normalize());
 
@@ -34,8 +40,13 @@ public class PartyPopper implements Interactable {
             fireworkMeta.addEffect(this.getConfetti());
             firework.setFireworkMeta(fireworkMeta);
 
+            firework.setMetadata("partypoppers:no_damage", new FixedMetadataValue(PartyPoppers.getInstance(), null));
+            firework.setPersistent(false);
             firework.detonate();
         });
+
+        player.setCooldown(item, 20);
+        player.setCooldown(Key.key("partypopper:popper"), 20);
     }
 
     public FireworkEffect getConfetti() {

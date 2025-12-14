@@ -10,8 +10,8 @@ public class LesbianPartyPopper extends PartyPopper {
             Color.fromRGB(198, 62, 13), // orange
             Color.fromRGB(230, 132, 77), // pastel orange
             Color.fromRGB(255, 255, 255), // white
-            Color.fromRGB(173, 80, 136), // white
-            Color.fromRGB(138, 1, 109) // white
+            Color.fromRGB(173, 80, 136), // pink
+            Color.fromRGB(138, 1, 109) // maroon
         )
         .build();
 

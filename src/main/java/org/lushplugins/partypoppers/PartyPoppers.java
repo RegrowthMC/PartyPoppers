@@ -57,7 +57,7 @@ public final class PartyPoppers extends JavaPlugin implements Listener {
         Interactable interactable = customItemRegistry.get(key);
         if (interactable != null) {
             if (paused) {
-                event.getPlayer().sendMessage(Component.text("Party items are currently paused", TextColor.fromHexString("#ff6969")));
+                event.getPlayer().sendActionBar(Component.text("Party items are currently paused", TextColor.fromHexString("#ff6969")));
                 return;
             }
 

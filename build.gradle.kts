@@ -18,6 +18,10 @@ repositories {
 dependencies {
     // Dependencies
     compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
+
+    // Libraries
+    implementation("io.github.revxrsal:lamp.common:4.0.0-rc.14")
+    implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.14")
 }
 
 java {

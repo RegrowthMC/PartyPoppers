@@ -7,15 +7,19 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.lushplugins.partypoppers.command.PartyPoppersCommand;
 import org.lushplugins.partypoppers.item.CustomItemRegistry;
 import org.lushplugins.partypoppers.item.Interactable;
 import org.lushplugins.partypoppers.item.ItemKey;
 import org.lushplugins.partypoppers.item.partypopper.*;
+import org.lushplugins.partypoppers.util.lamp.response.StringMessageResponseHandler;
+import revxrsal.commands.bukkit.BukkitLamp;
 
 public final class PartyPoppers extends JavaPlugin implements Listener {
     private static PartyPoppers plugin;
 
     private CustomItemRegistry customItemRegistry;
+    private boolean paused = false;
 
     @Override
     public void onLoad() {
@@ -32,10 +36,23 @@ public final class PartyPoppers extends JavaPlugin implements Listener {
         customItemRegistry.register(new ItemKey(Material.PAPER, 104), new TransPartyPopper());
 
         getServer().getPluginManager().registerEvents(this, this);
+
+        BukkitLamp.builder(this)
+            .responseHandler(String.class, new StringMessageResponseHandler())
+            .build()
+            .register(new PartyPoppersCommand());
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (paused) {
+            return;
+        }
+
         ItemStack item = event.getItem();
         if (item == null || !event.getAction().isRightClick()) {
             return;

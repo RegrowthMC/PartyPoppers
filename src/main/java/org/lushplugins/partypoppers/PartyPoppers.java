@@ -1,5 +1,7 @@
 package org.lushplugins.partypoppers;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +14,6 @@ import org.lushplugins.partypoppers.item.CustomItemRegistry;
 import org.lushplugins.partypoppers.item.Interactable;
 import org.lushplugins.partypoppers.item.ItemKey;
 import org.lushplugins.partypoppers.item.partypopper.*;
-import org.lushplugins.partypoppers.util.lamp.response.StringMessageResponseHandler;
 import revxrsal.commands.bukkit.BukkitLamp;
 
 public final class PartyPoppers extends JavaPlugin implements Listener {
@@ -37,9 +38,7 @@ public final class PartyPoppers extends JavaPlugin implements Listener {
 
         getServer().getPluginManager().registerEvents(this, this);
 
-        BukkitLamp.builder(this)
-            .responseHandler(String.class, new StringMessageResponseHandler())
-            .build()
+        BukkitLamp.builder(this).build()
             .register(new PartyPoppersCommand());
     }
 
@@ -49,10 +48,6 @@ public final class PartyPoppers extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (paused) {
-            return;
-        }
-
         ItemStack item = event.getItem();
         if (item == null || !event.getAction().isRightClick()) {
             return;
@@ -61,6 +56,11 @@ public final class PartyPoppers extends JavaPlugin implements Listener {
         ItemKey key = ItemKey.from(item);
         Interactable interactable = customItemRegistry.get(key);
         if (interactable != null) {
+            if (paused) {
+                event.getPlayer().sendMessage(Component.text("Party items are currently paused", TextColor.fromHexString("#ff6969")));
+                return;
+            }
+
             interactable.onInteract(event);
         }
     }

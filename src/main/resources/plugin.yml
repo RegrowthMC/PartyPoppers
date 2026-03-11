@@ -2,3 +2,4 @@ name: PartyPoppers
 version: ${project.version}
 main: org.lushplugins.partypoppers.PartyPoppers
 api-version: '1.17'
+github-repo: RegrowthMC/PartyPoppers
